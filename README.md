@@ -1,5 +1,5 @@
 # VNDB-Friends-List
-The script adds a "friends" link into VNDB's top navigation bar. Clicking it opens a window where you can (you can also close it by clicking on "friends" again):
+The script adds a "friends" link into VNDB's top navigation bar on your personal VNDB user pages. Clicking it opens a window where you can (you can also close it by clicking on "friends" again):
 
 1. Add friends by typing in their VNDB usernames
 2. View your friends list
