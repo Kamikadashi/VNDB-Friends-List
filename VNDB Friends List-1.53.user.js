@@ -11,6 +11,8 @@
 // @grant        GM_setValue
 // @grant        GM_getValue
 // @require      https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js
+// @license     http://creativecommons.org/licenses/by-nc-sa/4.0/
+// @thanks     For the cover preview on mouseover, I drew some inspiration and used a few lines from the original VNDB Cover Preview script by Kuro_scripts
 // ==/UserScript==
 
 (function() {
@@ -1550,7 +1552,7 @@
 							// (in case user switched tabs during load)
 							const currentTab = sessionStorage.getItem('vndb_friends_active_tab');
 							if (currentTab !== 'activityFeed') return;
-							
+
 							if (this.height === 0) return;
 							$('#friendsPopover').empty().append(this).friendsCenter().css('display', 'block');
 							GM_setValue(pagelink, imagelink);
@@ -1567,7 +1569,7 @@
 		if (activeTab !== 'activityFeed') {
 			return;
 		}
-		
+
 		clearTimeout(timeoutId);
 		$('#friendsPopover').css('display', 'none');
 	}
