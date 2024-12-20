@@ -27,7 +27,8 @@ To install:
 3. Visit VNDB and look for the new "friends" link in the top menu on any of your personal user pages
 
 
-<div class="user-screenshots">
-      <a href="/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsiZGF0YSI6MTU5NjM2LCJwdXIiOiJibG9iX2lkIn19--e57a2c0ddd3947d10754a47191139aff55cb708e/_chrome_OPidqutL9T.jpg?locale=en"><img src="https://greasyfork.org/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsiZGF0YSI6MTU5NjM2LCJwdXIiOiJibG9iX2lkIn19--e57a2c0ddd3947d10754a47191139aff55cb708e/eyJfcmFpbHMiOnsiZGF0YSI6eyJmb3JtYXQiOiJqcGciLCJyZXNpemVfdG9fbGltaXQiOlsyMDAsMjAwXX0sInB1ciI6InZhcmlhdGlvbiJ9fQ==--bea51d3d0b28d8ebf7b93bb0c10c2ccfd746f26a/_chrome_OPidqutL9T.jpg?locale=en"></a>
-      <a href="/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsiZGF0YSI6MTU5NjM3LCJwdXIiOiJibG9iX2lkIn19--40752b8afdf3b009a10f5d452acbecf96a7b617a/_chrome_sXMIVUT01M.jpg?locale=en"><img src="https://greasyfork.org/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsiZGF0YSI6MTU5NjM3LCJwdXIiOiJibG9iX2lkIn19--40752b8afdf3b009a10f5d452acbecf96a7b617a/eyJfcmFpbHMiOnsiZGF0YSI6eyJmb3JtYXQiOiJqcGciLCJyZXNpemVfdG9fbGltaXQiOlsyMDAsMjAwXX0sInB1ciI6InZhcmlhdGlvbiJ9fQ==--bea51d3d0b28d8ebf7b93bb0c10c2ccfd746f26a/_chrome_sXMIVUT01M.jpg?locale=en"></a>
-  </div>
+![_chrome_OPidqutL9T](https://github.com/user-attachments/assets/a431fd42-8c6c-4015-a098-00e9d38de57c)
+![_chrome_sXMIVUT01M](https://github.com/user-attachments/assets/ada981c3-e85d-47c0-be8d-cfb0f8dcb135)
+
+
+
