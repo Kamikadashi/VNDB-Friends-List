@@ -12,13 +12,12 @@ The script also automatically adapts to any VNDB theme for consistent visuals.
 The settings panel allows you to customize:
 
 1. Visual theme (colors, fonts, opacity)
-2. Number of VNs shown per friend
-3. Maximum activities displayed/recent votes to fetch per friend
-4. Cache life duration
-5. Font sizes for different elements
-6. Export/Import your list
+2. Maximum activities displayed/recent votes to fetch per friend
+3. Cache lifespan duration
+4. Font sizes for different elements
+5. Export/Import your list
 
-The script uses VNDB's API for data retrieval and localStorage/sessionStorage for persistence. It's made to be lightweight and unobtrusive, while adding valuable social features to enhance the VNDB experience.
+The script uses VNDB's API for data retrieval and localStorage/sessionStorage for persistence. It's made to be lightweight and unobtrusive, while adding minimal social features to enhance the VNDB experience.
 
 To install:
 
