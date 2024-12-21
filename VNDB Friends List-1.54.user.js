@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         VNDB Friends List
 // @namespace    http://tampermonkey.net/
-// @version      1.53
+// @version      1.54
 // @description  Add friends list functionality to VNDB user pages
 // @author       ALVIBO
 // @match        https://vndb.org/u*
@@ -13,6 +13,8 @@
 // @require      https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js
 // @license     http://creativecommons.org/licenses/by-nc-sa/4.0/
 // @thanks     For the cover preview on mouseover, I drew some inspiration and used a few lines from the original VNDB Cover Preview script by Kuro_scripts
+// @downloadURL https://update.greasyfork.org/scripts/521321/VNDB%20Friends%20List.user.js
+// @updateURL https://update.greasyfork.org/scripts/521321/VNDB%20Friends%20List.meta.js
 // ==/UserScript==
 
 (function() {
@@ -616,76 +618,76 @@
         });
     });
 
-    // Add Friends link to menu
+    // Add Friends link to menu only if it doesn't already exist
     const menu = document.querySelector('header nav menu');
-    const friendsLink = document.createElement('li');
-    friendsLink.innerHTML = `<a href="#">friends</a>`;
-    menu.appendChild(friendsLink);
+    if (!menu.querySelector('li a[href="#"]')) {
+        const friendsLink = document.createElement('li');
+        friendsLink.innerHTML = `<a href="#">friends</a>`;
+        menu.appendChild(friendsLink);
+    }
 
-	// Modify this section to ensure pagination buttons are hidden on Recent Activity tab
-	function updatePagination() {
-		const totalPages = Math.ceil(friends.length / friendsPerPage);
-		const pagination = document.getElementById('pagination');
+    // Modify this section to ensure pagination buttons are hidden on Recent Activity tab
+    function updatePagination() {
+        const totalPages = Math.ceil(friends.length / friendsPerPage);
+        const pagination = document.getElementById('pagination');
 
-		const activeTab = sessionStorage.getItem('vndb_friends_active_tab') || 'friendsList';
+        const activeTab = sessionStorage.getItem('vndb_friends_active_tab') || 'friendsList';
 
-		if (activeTab === 'activityFeed') {
-			pagination.style.display = 'none';
-			return;
-		}
+        if (activeTab === 'activityFeed') {
+            pagination.style.display = 'none';
+            return;
+        }
 
-		if (totalPages <= 1) {
-			pagination.style.display = 'none';
-			return;
-		}
+        if (totalPages <= 1) {
+            pagination.style.display = 'none';
+            return;
+        }
 
-		pagination.style.display = 'block';
-		pagination.innerHTML = `
-			${currentPage > 1 ? `<button class="pageButton" data-page="${currentPage - 1}">←</button>` : ''}
-			Page ${currentPage} of ${totalPages}
-			${currentPage < totalPages ? `<button class="pageButton" data-page="${currentPage + 1}">→</button>` : ''}
-		`;
+        pagination.style.display = 'block';
+        pagination.innerHTML = `
+            ${currentPage > 1 ? `<button class="pageButton" data-page="${currentPage - 1}">←</button>` : ''}
+            Page ${currentPage} of ${totalPages}
+            ${currentPage < totalPages ? `<button class="pageButton" data-page="${currentPage + 1}">→</button>` : ''}
+        `;
 
-		// Add event listeners to the newly created pagination buttons
-		const pageButtons = pagination.querySelectorAll('.pageButton');
-		pageButtons.forEach(button => {
-			button.addEventListener('click', function() {
-				changePage(parseInt(this.dataset.page));
-			});
-		});
-	}
+        // Add event listeners to the newly created pagination buttons
+        const pageButtons = pagination.querySelectorAll('.pageButton');
+        pageButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                changePage(parseInt(this.dataset.page));
+            });
+        });
+    }
 
-	// Ensure pagination visibility updates correctly on tab switches
-	function handleTabSwitch(tabId) {
-		const pagination = document.getElementById('pagination');
+    // Ensure pagination visibility updates correctly on tab switches
+    function handleTabSwitch(tabId) {
+        const pagination = document.getElementById('pagination');
 
-		if (tabId === 'activityFeed') {
-			pagination.style.display = 'none';
-		} else if (tabId === 'friendsList') {
-			const totalPages = Math.ceil(friends.length / friendsPerPage);
-			pagination.style.display = totalPages > 1 ? 'block' : 'none';
-		}
+        if (tabId === 'activityFeed') {
+            pagination.style.display = 'none';
+        } else if (tabId === 'friendsList') {
+            const totalPages = Math.ceil(friends.length / friendsPerPage);
+            pagination.style.display = totalPages > 1 ? 'block' : 'none';
+        }
 
-		// Always call updatePagination to refresh buttons when switching tabs
-		updatePagination();
-	}
+        // Always call updatePagination to refresh buttons when switching tabs
+        updatePagination();
+    }
 
-	// Listen for tab switches and update pagination accordingly
-	document.querySelectorAll('.tab-button').forEach(button => {
-		button.addEventListener('click', () => {
-			const tabId = button.dataset.tab;
-			sessionStorage.setItem('vndb_friends_active_tab', tabId);
-			handleTabSwitch(tabId);
-		});
-	});
+    // Listen for tab switches and update pagination accordingly
+    document.querySelectorAll('.tab-button').forEach(button => {
+        button.addEventListener('click', () => {
+            const tabId = button.dataset.tab;
+            sessionStorage.setItem('vndb_friends_active_tab', tabId);
+            handleTabSwitch(tabId);
+        });
+    });
 
-	// Ensure pagination is not displayed even after a browser back action
-	window.addEventListener('load', () => {
-		const activeTab = sessionStorage.getItem('vndb_friends_active_tab') || 'friendsList';
-		handleTabSwitch(activeTab);
-	});
-
-
+    // Ensure pagination is not displayed even after a browser back action
+    window.addEventListener('load', () => {
+        const activeTab = sessionStorage.getItem('vndb_friends_active_tab') || 'friendsList';
+        handleTabSwitch(activeTab);
+    });
 
     // Function to change page
     function changePage(newPage) {
@@ -797,6 +799,7 @@
     }
 
     // Event listeners
+    const friendsLink = document.querySelector('header nav menu li a[href="#"]');
     friendsLink.addEventListener('click', async (e) => {
         e.preventDefault();
         const container = document.querySelector('.friends-container');
@@ -1512,67 +1515,67 @@
         return this;
     };
 
-	// Update the hover handlers
-	function handleFriendsMouseOver() {
-		// Only show covers if we're on the activity tab
-		const activeTab = sessionStorage.getItem('vndb_friends_active_tab');
-		if (activeTab !== 'activityFeed') {
-			return;
-		}
+    // Update the hover handlers
+    function handleFriendsMouseOver() {
+        // Only show covers if we're on the activity tab
+        const activeTab = sessionStorage.getItem('vndb_friends_active_tab');
+        if (activeTab !== 'activityFeed') {
+            return;
+        }
 
-		const vnId = this.getAttribute('href');
-		if (!vnId) return;
+        const vnId = this.getAttribute('href');
+        if (!vnId) return;
 
-		const pagelink = 'https://vndb.org' + vnId;
+        const pagelink = 'https://vndb.org' + vnId;
 
-		timeoutId = setTimeout(() => {
-			if (GM_getValue(pagelink)) {
-				const retrievedLink = GM_getValue(pagelink);
-				$('#friendsPopover').empty().append('<img src="' + retrievedLink + '"></img>');
-				$('#friendsPopover img').on('load', function() {
-					if (this.height === 0) {
-						GM_deleteValue(pagelink);
-					} else {
-						$('#friendsPopover').friendsCenter().css('display', 'block');
-					}
-				});
-			} else {
-				$.ajax({
-					url: pagelink,
-					dataType: 'text',
-					success: function (data) {
-						const parser = new DOMParser();
-						const dataDOC = parser.parseFromString(data, 'text/html');
-						const imagelink = dataDOC.querySelector(".vnimg img").src;
-						if (!imagelink) return;
+        timeoutId = setTimeout(() => {
+            if (GM_getValue(pagelink)) {
+                const retrievedLink = GM_getValue(pagelink);
+                $('#friendsPopover').empty().append('<img src="' + retrievedLink + '"></img>');
+                $('#friendsPopover img').on('load', function() {
+                    if (this.height === 0) {
+                        GM_deleteValue(pagelink);
+                    } else {
+                        $('#friendsPopover').friendsCenter().css('display', 'block');
+                    }
+                });
+            } else {
+                $.ajax({
+                    url: pagelink,
+                    dataType: 'text',
+                    success: function (data) {
+                        const parser = new DOMParser();
+                        const dataDOC = parser.parseFromString(data, 'text/html');
+                        const imagelink = dataDOC.querySelector(".vnimg img").src;
+                        if (!imagelink) return;
 
-						const img = new Image();
-						img.onload = function() {
-							// Check tab again before showing the image
-							// (in case user switched tabs during load)
-							const currentTab = sessionStorage.getItem('vndb_friends_active_tab');
-							if (currentTab !== 'activityFeed') return;
+                        const img = new Image();
+                        img.onload = function() {
+                            // Check tab again before showing the image
+                            // (in case user switched tabs during load)
+                            const currentTab = sessionStorage.getItem('vndb_friends_active_tab');
+                            if (currentTab !== 'activityFeed') return;
 
-							if (this.height === 0) return;
-							$('#friendsPopover').empty().append(this).friendsCenter().css('display', 'block');
-							GM_setValue(pagelink, imagelink);
-						};
-						img.src = imagelink;
-					}
-				});
-			}
-		}, 250);
-	}
+                            if (this.height === 0) return;
+                            $('#friendsPopover').empty().append(this).friendsCenter().css('display', 'block');
+                            GM_setValue(pagelink, imagelink);
+                        };
+                        img.src = imagelink;
+                    }
+                });
+            }
+        }, 250);
+    }
 
-	function handleFriendsMouseLeave() {
-		const activeTab = sessionStorage.getItem('vndb_friends_active_tab');
-		if (activeTab !== 'activityFeed') {
-			return;
-		}
+    function handleFriendsMouseLeave() {
+        const activeTab = sessionStorage.getItem('vndb_friends_active_tab');
+        if (activeTab !== 'activityFeed') {
+            return;
+        }
 
-		clearTimeout(timeoutId);
-		$('#friendsPopover').css('display', 'none');
-	}
+        clearTimeout(timeoutId);
+        $('#friendsPopover').css('display', 'none');
+    }
 
     // Add mutation observer to handle dynamic page changes
     const pageObserver = new MutationObserver(() => {
